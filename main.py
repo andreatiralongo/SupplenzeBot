@@ -3,7 +3,7 @@ import time
 import requests
 from bs4 import BeautifulSoup
 import os
-from config import URL, TEXT_SEARCH, API_KEY, CHAT_IDS, MINUTES_TIMEOUT
+from config import URL, TEXT_SEARCH, API_KEY, TELEGRAM_CHAT_IDS
 
 # File to store previously seen links
 seen_file = "seen_links.txt"
@@ -42,7 +42,7 @@ def check_new_assistenze():
 
             # ---------------- SEND TO MULTIPLE TELEGRAM CHATS ----------------
             telegram_url = f"https://api.telegram.org/bot{API_KEY}/sendMessage"
-            for chat_id in CHAT_IDS:
+            for chat_id in TELEGRAM_CHAT_IDS:
                 payload = {
                     "chat_id": chat_id,
                     "text": message
@@ -61,16 +61,5 @@ def check_new_assistenze():
         for link in current_links.union(seen_links):
             f.write(link + "\n")
 
-# ---------------- MAIN LOOP ----------------
-print("Starting scraper... Press Ctrl+C to stop.")
-while True:
-    try:
-        check_new_assistenze()
-        print("Waiting 15 minutes before next check...")
-        time.sleep(MINUTES_TIMEOUT * 60)  # 15 minutes
-    except KeyboardInterrupt:
-        print("Scraper stopped by user.")
-        break
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        time.sleep(MINUTES_TIMEOUT * 60)  # wait before retrying
+print("Starting scraper....")
+check_new_assistenze()

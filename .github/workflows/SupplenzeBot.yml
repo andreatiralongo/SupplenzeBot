@@ -30,6 +30,8 @@ jobs:
       # 4. Run the scraper
       - name: Run scraper
         env:
-          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          URL: ${{ secrets.URL }}
+          TEXT_SEARCH: ${{ secrets.TEXT_SEARCH }}
+          API_KEY: ${{ secrets.API_KEY }}
           TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
         run: python scraper.py
