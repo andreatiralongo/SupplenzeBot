@@ -1,12 +1,31 @@
-import time
-
 import requests
 from bs4 import BeautifulSoup
 import os
 from config import URL, TEXT_SEARCH, API_KEY, TELEGRAM_CHAT_IDS
 
+
+
 # File to store previously seen links
 seen_file = "seen_links.txt"
+
+def get_link_info(info_url):
+    response = requests.get(info_url)
+    if response.status_code != 200:
+        print(f"Failed to retrieve the page {info_url}. Status code: {response.status_code}")
+        return "Couldnt Find Info"
+    soup = BeautifulSoup(response.text, "html.parser")
+    h2_tag = soup.find("h2", string=TEXT_SEARCH)
+
+    if h2_tag:
+        # Get the next <p> sibling
+        p_tag = h2_tag.find_next_sibling("p")
+        if p_tag:
+            return p_tag.text
+        else:
+            return "Couldnt Find Info"
+    else:
+        return "Couldnt Find Info"
+
 
 def check_new_assistenze():
     # Load previously seen links
@@ -38,14 +57,16 @@ def check_new_assistenze():
     # Print new links
     if new_links:
         for new_link in new_links:
-            message = "Nuova Supplenza:\n" + new_link
+            info = get_link_info(new_link)
+            message = f"Nuova Supplenza: \n*{info}*\n" + new_link
 
             # ---------------- SEND TO MULTIPLE TELEGRAM CHATS ----------------
             telegram_url = f"https://api.telegram.org/bot{API_KEY}/sendMessage"
             for chat_id in TELEGRAM_CHAT_IDS:
                 payload = {
                     "chat_id": chat_id,
-                    "text": message
+                    "text": message,
+                    "parse_mode": "Markdown"
                 }
                 r = requests.post(telegram_url, data=payload)
                 if r.status_code == 200:
