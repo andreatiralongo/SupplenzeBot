@@ -1,4 +1,4 @@
-name: Telegram Scraper
+name: SupplenzeBot
 
 # Schedule: every 15 minutes
 on:
@@ -34,4 +34,4 @@ jobs:
           TEXT_SEARCH: ${{ secrets.TEXT_SEARCH }}
           API_KEY: ${{ secrets.API_KEY }}
           TELEGRAM_CHAT_IDS: ${{ secrets.TELEGRAM_CHAT_IDS }}
-        run: python scraper.py
+        run: python main.py
