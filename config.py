@@ -1,0 +1,6 @@
+URL = ""
+TEXT_SEARCH = ""
+API_KEY = ""
+MINUTES_TIMEOUT = 15
+
+CHAT_IDS = []
