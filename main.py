@@ -38,7 +38,7 @@ def check_new_assistenze():
     # Print new links
     if new_links:
         for new_link in new_links:
-            message = "Nuova assistenza:\n" + new_link
+            message = "Nuova Supplenza:\n" + new_link
 
             # ---------------- SEND TO MULTIPLE TELEGRAM CHATS ----------------
             telegram_url = f"https://api.telegram.org/bot{API_KEY}/sendMessage"
