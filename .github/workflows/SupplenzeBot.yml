@@ -21,6 +21,12 @@ jobs:
         with:
           python-version: "3.12.2"  # choose your version
 
+      - name: Cache seen links
+        uses: actions/cache@v3
+        with:
+          path: seen_links.txt
+          key: seen-links
+
       # 3. Install dependencies
       - name: Install dependencies
         run: |
