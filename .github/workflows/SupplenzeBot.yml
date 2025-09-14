@@ -3,7 +3,7 @@ name: SupplenzeBot
 # Schedule: every 15 minutes
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:  # allows manual triggering
 
 jobs:
