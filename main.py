@@ -58,7 +58,7 @@ def check_new_assistenze():
     if new_links:
         for new_link in new_links:
             info = get_link_info(new_link)
-            message = f"Nuova Supplenza: \n*{info}*\n" + new_link
+            message = f"Nuova Supplenza: \n*{info}*\n" + f"<a href='{new_link}'>Vai all'assistenza</a>"
 
             # ---------------- SEND TO MULTIPLE TELEGRAM CHATS ----------------
             telegram_url = f"https://api.telegram.org/bot{API_KEY}/sendMessage"
@@ -79,7 +79,7 @@ def check_new_assistenze():
 
     # ---------------- UPDATE SEEN LINKS ----------------
     with open(seen_file, "w") as f:
-        for link in current_links.union(seen_links):
+        for link in new_links.union(seen_links):
             f.write(link + "\n")
 
 print("Starting scraper....")
